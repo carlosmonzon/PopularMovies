@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+
+    <string name="poster_content_description">Movie poster</string>
+
+    <!--error messages-->
+    <string name="error_message">An error has occurred. Please try again</string>
+
+
+    <!--action-->
+    <string name="action_sort_by">Sort by</string>
+
+    <string name="action_sort_by_most_popular">Most Popular</string>
+
+    <string name="action_sort_by_top_rated">Top Rated</string>
+</resources>
