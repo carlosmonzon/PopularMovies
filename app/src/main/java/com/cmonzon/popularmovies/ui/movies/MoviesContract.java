@@ -29,9 +29,9 @@ public interface MoviesContract {
 
         void openMovieDetail(MovieEntity movie);
 
-        void setSortType(MoviesSortType sortType);
+        void setSortType(String sortType);
 
-        MoviesSortType getSortType();
+        String getSortType();
     }
 
 }

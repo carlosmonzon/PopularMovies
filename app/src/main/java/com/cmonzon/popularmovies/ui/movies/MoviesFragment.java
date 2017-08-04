@@ -3,6 +3,7 @@ package com.cmonzon.popularmovies.ui.movies;
 import com.cmonzon.popularmovies.R;
 import com.cmonzon.popularmovies.data.MovieEntity;
 import com.cmonzon.popularmovies.ui.moviedetail.MovieDetailActivity;
+import com.cmonzon.popularmovies.util.ActivityUtils;
 import com.cmonzon.popularmovies.util.ItemOffsetDecoration;
 
 import android.content.Intent;
@@ -58,8 +59,7 @@ public class MoviesFragment extends Fragment implements MoviesContract.View, Mov
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movies, container, false);
         ButterKnife.bind(this, view);
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(),
-                getResources().getInteger(R.integer.grid_items));
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), ActivityUtils.numberOfColumns(getActivity()));
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getActivity(), R.dimen.grid_offset);
@@ -75,7 +75,7 @@ public class MoviesFragment extends Fragment implements MoviesContract.View, Mov
         setHasOptionsMenu(true);
         if (savedInstanceState != null) {
             //restore saved instance
-            MoviesSortType sortBy = (MoviesSortType) savedInstanceState.getSerializable(SORT_BY);
+            String sortBy = savedInstanceState.getString(SORT_BY);
             mPresenter.setSortType(sortBy);
             movies = savedInstanceState.getParcelableArrayList(MOVIES_KEY);
         }
@@ -101,7 +101,7 @@ public class MoviesFragment extends Fragment implements MoviesContract.View, Mov
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(SORT_BY, mPresenter.getSortType());
+        outState.putString(SORT_BY, mPresenter.getSortType());
         if (movies != null) {
             outState.putParcelableArrayList(MOVIES_KEY, movies);
         }

@@ -29,7 +29,7 @@ public class MoviesPresenter implements MoviesContract.Presenter {
     @NonNull
     private CompositeDisposable composite;
 
-    private MoviesSortType mSortType = MoviesSortType.MOST_POPULAR;
+    private String mSortType = MoviesSortType.MOST_POPULAR;
 
     public MoviesPresenter(@NonNull MoviesRepository moviesRepository, @NonNull MoviesContract.View view) {
         mMoviesRepository = checkNotNull(moviesRepository);
@@ -74,12 +74,12 @@ public class MoviesPresenter implements MoviesContract.Presenter {
     }
 
     @Override
-    public void setSortType(MoviesSortType sortType) {
+    public void setSortType(String sortType) {
         mSortType = sortType;
     }
 
     @Override
-    public MoviesSortType getSortType() {
+    public String getSortType() {
         return mSortType;
     }
 }

@@ -3,10 +3,10 @@ package com.cmonzon.popularmovies.ui.movies;
 /**
  * @author cmonzon
  */
-public enum MoviesSortType {
+public final class MoviesSortType {
 
-    MOST_POPULAR,
+    public final static String MOST_POPULAR = "most_popular";
 
-    TOP_RATED
+    public final static String TOP_RATED = "top_rated";
 
 }

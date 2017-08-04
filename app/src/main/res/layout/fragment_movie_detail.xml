@@ -1,67 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <RelativeLayout android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/activity_margin"
-                    android:layout_height="wrap_content">
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/activity_margin"
+                        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/iv_poster"
-            android:layout_width="@dimen/poster_width"
-            android:layout_marginLeft="@dimen/activity_margin"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/poster_content_description"
-            android:layout_marginRight="@dimen/activity_margin"
-            android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/iv_poster"
+                android:layout_width="@dimen/poster_width"
+                android:layout_marginLeft="@dimen/activity_margin"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/poster_content_description"
+                android:layout_marginRight="@dimen/activity_margin"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tv_movie_title"
+                android:layout_width="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toRightOf="@id/iv_poster"
+                android:layout_toEndOf="@id/iv_poster"
+                style="@style/TextAppearance.AppCompat.Title"
+                tools:text="Movie Title"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tv_movie_release_date"
+                android:layout_width="wrap_content"
+                tools:text="2017-08-01"
+                android:layout_marginTop="11dp"
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_movie_title"
+                android:layout_alignLeft="@id/tv_movie_title"
+                android:layout_alignStart="@id/tv_movie_title"/>
+
+
+            <TextView
+                android:id="@+id/tv_movie_rating"
+                android:layout_below="@id/tv_movie_release_date"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/text_margin"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:drawableRight="@drawable/ic_star_24dp"
+                android:drawableEnd="@drawable/ic_star_24dp"
+                android:layout_alignLeft="@id/tv_movie_title"
+                android:layout_alignStart="@id/tv_movie_title"
+                tools:text="7.0"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/tv_movie_title"
+            android:id="@+id/tv_overview"
+            android:layout_margin="@dimen/activity_margin"
+            style="@style/TextAppearance.AppCompat.Body1"
+            tools:text="A live-action adaptation of Disney's version of the classic 'Beauty and the Beast' tale of a cursed prince and a beautiful young woman who helps him break the spell."
             android:layout_width="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@id/iv_poster"
-            android:layout_toEndOf="@id/iv_poster"
-            style="@style/TextAppearance.AppCompat.Title"
-            tools:text="Movie Title"
             android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/tv_movie_release_date"
-            android:layout_width="wrap_content"
-            tools:text="2017-08-01"
-            android:layout_marginTop="11dp"
-            style="@style/TextAppearance.AppCompat.Caption"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_movie_title"
-            android:layout_alignLeft="@id/tv_movie_title"
-            android:layout_alignStart="@id/tv_movie_title"/>
-
-
-        <TextView
-            android:id="@+id/tv_movie_rating"
-            android:layout_below="@id/tv_movie_release_date"
-            android:layout_width="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/text_margin"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            android:drawableRight="@drawable/ic_star_24dp"
-            android:drawableEnd="@drawable/ic_star_24dp"
-            android:layout_alignLeft="@id/tv_movie_title"
-            android:layout_alignStart="@id/tv_movie_title"
-            tools:text="7.0"
-            android:layout_height="wrap_content"/>
-
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/tv_overview"
-        android:layout_margin="@dimen/activity_margin"
-        style="@style/TextAppearance.AppCompat.Body1"
-        tools:text="A live-action adaptation of Disney's version of the classic 'Beauty and the Beast' tale of a cursed prince and a beautiful young woman who helps him break the spell."
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
