@@ -4,6 +4,7 @@
     <dimen name="activity_margin">16dp</dimen>
     <dimen name="text_margin">8dp</dimen>
     <dimen name="poster_width">96dp</dimen>
+    <dimen name="poster_height">124dp</dimen>
     <dimen name="progress_bar_size">46dp</dimen>
     <integer name="grid_items">2</integer>
 </resources>

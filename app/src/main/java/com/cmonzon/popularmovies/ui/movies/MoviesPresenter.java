@@ -47,17 +47,29 @@ public class MoviesPresenter implements MoviesContract.Presenter {
     public void loadMovies() {
         mView.showProgressIndicator(true);
         Observable<MovieList> movieListObservable;
-        if (mSortType.equals(MoviesSortType.MOST_POPULAR)) {
-            movieListObservable = mMoviesRepository.getPopularMovies();
-        } else {
-            movieListObservable = mMoviesRepository.getTopRatedMovies();
+        switch (mSortType) {
+            case MoviesSortType.MOST_POPULAR:
+                movieListObservable = mMoviesRepository.getPopularMovies();
+                break;
+            case MoviesSortType.TOP_RATED:
+                movieListObservable = mMoviesRepository.getTopRatedMovies();
+                break;
+            default:
+                movieListObservable = mMoviesRepository.getFavoriteMovies();
+                break;
+
         }
+
+        composite.clear();
         composite.add(movieListObservable.observeOn(AndroidSchedulers.mainThread()).subscribe(
                 new Consumer<MovieList>() {
                     @Override
                     public void accept(@NonNull MovieList movieList) throws Exception {
                         mView.showProgressIndicator(false);
                         mView.showMovies(new ArrayList<>(movieList.getResults()));
+                        if (movieList.getResults().isEmpty()) {
+                            mView.showNoDataFound();
+                        }
                     }
                 }, new Consumer<Throwable>() {
                     @Override

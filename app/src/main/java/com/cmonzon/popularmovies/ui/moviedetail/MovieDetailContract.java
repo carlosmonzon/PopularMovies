@@ -13,11 +13,15 @@ public interface MovieDetailContract {
 
         void showMovie(MovieEntity entity);
 
+        void showFavorite(boolean isFavorite);
+
     }
 
     interface Presenter extends BasePresenter {
 
         void openMovie();
+
+        void onFavoriteClick();
     }
 
 }

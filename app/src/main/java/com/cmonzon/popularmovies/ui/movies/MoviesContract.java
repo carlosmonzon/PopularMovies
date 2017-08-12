@@ -21,6 +21,8 @@ public interface MoviesContract {
 
         void showMovieDetail(MovieEntity movie);
 
+        void showNoDataFound();
+
     }
 
     interface Presenter extends BasePresenter {

@@ -1,5 +1,6 @@
 package com.cmonzon.popularmovies.data.remote;
 
+import com.cmonzon.popularmovies.data.MovieEntity;
 import com.cmonzon.popularmovies.data.MovieList;
 import com.cmonzon.popularmovies.data.MoviesDataSource;
 
@@ -38,5 +39,26 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
     @Override
     public Observable<MovieList> getTopRatedMovies() {
         return mMoviesApi.getTopRatedMovies().subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<MovieList> getFavoriteMovies() {
+        //not implemented
+        return null;
+    }
+
+    @Override
+    public Observable<Boolean> isFavorite(MovieEntity movie) {
+        return null;
+    }
+
+    @Override
+    public void saveFavoriteMovie(MovieEntity movie) {
+        //not implemented
+    }
+
+    @Override
+    public void deleteFavoriteMovie(MovieEntity movie) {
+        //not implemented
     }
 }

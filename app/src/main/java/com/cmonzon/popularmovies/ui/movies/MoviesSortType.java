@@ -9,4 +9,6 @@ public final class MoviesSortType {
 
     public final static String TOP_RATED = "top_rated";
 
+    public final static String FAVORITES = "favorites";
+
 }

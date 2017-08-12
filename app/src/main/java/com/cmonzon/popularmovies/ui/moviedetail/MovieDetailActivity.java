@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.cmonzon.popularmovies.Injection;
 import com.cmonzon.popularmovies.R;
 import com.cmonzon.popularmovies.data.MovieEntity;
 import com.cmonzon.popularmovies.util.ActivityUtils;
@@ -42,7 +43,7 @@ public class MovieDetailActivity extends AppCompatActivity {
             }
 
             // Create the presenter
-            new MovieDetailPresenter(entity, movieDetailFragment);
+            new MovieDetailPresenter(Injection.provideMoviesRepository(this), entity, movieDetailFragment);
         }
     }
 

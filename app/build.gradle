@@ -17,6 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -26,18 +29,19 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:' + rootProject.supportLibVersion;
     compile 'com.android.support:recyclerview-v7:' + rootProject.supportLibVersion;
+    compile 'com.android.support.constraint:constraint-layout:'+rootProject.constraintLayoutVersion
 
     //retrofit
     compile 'com.squareup.retrofit2:retrofit:' + rootProject.retrofitVersion;
     compile 'com.squareup.retrofit2:converter-gson:' + rootProject.gsonConverterVersion;
     compile 'com.squareup.retrofit2:adapter-rxjava2:' + rootProject.rxJavaAdapter;
 
+    //sqlbrite
+    compile 'com.squareup.sqlbrite2:sqlbrite:'+rootProject.sqlBriteVersion
+
     //picasso
     compile 'com.squareup.picasso:picasso:' + rootProject.picassoVersion;
-
-    //butter knife
-    compile 'com.jakewharton:butterknife:' + rootProject.butterKnifeVersion;
-    annotationProcessor 'com.jakewharton:butterknife-compiler:' + rootProject.butterKnifeVersion;
+    compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:'+rootProject.okhttpDownloaderVersion
 
     // RxJava
     compile "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"

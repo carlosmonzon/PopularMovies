@@ -28,6 +28,6 @@ public class MoviesActivity extends AppCompatActivity {
         }
 
         // Create the presenter
-        new MoviesPresenter(Injection.provideMoviesRepository(), moviesFragment);
+        new MoviesPresenter(Injection.provideMoviesRepository(this), moviesFragment);
     }
 }

@@ -1,8 +1,12 @@
 package com.cmonzon.popularmovies;
 
 import com.cmonzon.popularmovies.data.MoviesRepository;
+import com.cmonzon.popularmovies.data.local.MoviesLocalDataSource;
 import com.cmonzon.popularmovies.data.remote.MoviesRemoteDataSource;
 import com.cmonzon.popularmovies.data.remote.MoviesService;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
 
 /**
  * Enables injections for {@link MoviesRepository} at compile time
@@ -11,8 +15,9 @@ import com.cmonzon.popularmovies.data.remote.MoviesService;
  */
 public class Injection {
 
-    public static MoviesRepository provideMoviesRepository() {
-        return MoviesRepository.getInstance(MoviesRemoteDataSource.getInstance(new MoviesService().getMoviesApi()));
+    public static MoviesRepository provideMoviesRepository(@NonNull Context context) {
+        return MoviesRepository.getInstance(MoviesRemoteDataSource.getInstance(new MoviesService().getMoviesApi()),
+                MoviesLocalDataSource.getInstance(context));
     }
 
 }

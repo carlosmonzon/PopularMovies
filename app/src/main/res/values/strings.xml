@@ -6,6 +6,8 @@
     <!--error messages-->
     <string name="error_message">An error has occurred. Please try again</string>
 
+    <string name="empty_movies_message">No movies found</string>
+
 
     <!--action-->
     <string name="action_sort_by">Sort by</string>
@@ -13,4 +15,12 @@
     <string name="action_sort_by_most_popular">Most Popular</string>
 
     <string name="action_sort_by_top_rated">Top Rated</string>
+
+    <string name="action_sort_by_favorites">Favorites</string>
+
+    <string name="action_add_to_favorites">Add to favorites</string>
+
+    <string name="action_remove_from_favorites">Added to favorites</string>
+
+    <string name="action_share">Share</string>
 </resources>

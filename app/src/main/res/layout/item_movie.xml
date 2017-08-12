@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_height="wrap_content"
-             android:foreground="?attr/selectableItemBackground"
-             android:layout_width="match_parent">
-    <ImageView
-        android:id="@+id/iv_poster"
-        android:layout_width="match_parent"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/poster_content_description"
-        android:layout_height="match_parent"/>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</FrameLayout>
+    <data>
+        <variable
+            name="movie"
+            type="com.cmonzon.popularmovies.data.MovieEntity"
+        />
+
+        <variable
+            name="callback"
+            type="com.cmonzon.popularmovies.ui.movies.MoviesAdapter.MoviesAdapterOnClickHandler"
+        />
+    </data>
+
+    <FrameLayout
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackground"
+        android:onClick="@{() -> callback.onItemClick(movie)}"
+        android:layout_width="match_parent">
+        <ImageView
+            android:id="@+id/iv_poster"
+            android:layout_width="match_parent"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/poster_content_description"
+            app:imageUrl="@{movie.posterPath}"
+            android:layout_height="match_parent"/>
+
+    </FrameLayout>
+</layout>

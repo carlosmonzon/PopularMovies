@@ -1,20 +1,20 @@
 package com.cmonzon.popularmovies.ui.moviedetail;
 
 import com.cmonzon.popularmovies.R;
+import com.cmonzon.popularmovies.binding.BindingAdapters;
 import com.cmonzon.popularmovies.data.MovieEntity;
-import com.squareup.picasso.Picasso;
+import com.cmonzon.popularmovies.databinding.FragmentMovieDetailsBinding;
 
+import android.databinding.DataBindingUtil;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * @author cmonzon
@@ -23,20 +23,7 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
 
     private MovieDetailContract.Presenter mPresenter;
 
-    @BindView(R.id.tv_movie_title)
-    TextView tvTitle;
-
-    @BindView(R.id.tv_overview)
-    TextView tvOverview;
-
-    @BindView(R.id.tv_movie_release_date)
-    TextView tvReleaseDate;
-
-    @BindView(R.id.tv_movie_rating)
-    TextView tvRating;
-
-    @BindView(R.id.iv_poster)
-    ImageView ivPoster;
+    FragmentMovieDetailsBinding binding;
 
     public static MovieDetailFragment newInstance() {
         return new MovieDetailFragment();
@@ -45,9 +32,9 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_movie_detail, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_details, container, false);
+        binding.setDetailPresenter(mPresenter);
+        return binding.getRoot();
     }
 
     @Override
@@ -57,18 +44,34 @@ public class MovieDetailFragment extends Fragment implements MovieDetailContract
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.unSubscribe();
+    }
+
+    @Override
     public void setPresenter(MovieDetailContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
     @Override
     public void showMovie(MovieEntity movie) {
-        tvOverview.setText(movie.getOverview());
-        tvTitle.setText(movie.getOriginalTitle());
-        tvReleaseDate.setText(movie.getReleaseDate());
-        tvRating.setText(String.valueOf(movie.getVoteAverage()));
-        Picasso.with(getContext()).load("http://image.tmdb.org/t/p/w185" + movie.getPosterPath())
-                .placeholder(R.color.light_grey).error(R.color.light_grey).into(ivPoster);
+        binding.tvOverview.setText(movie.getOverview());
+        binding.tvMovieTitle.setText(movie.getOriginalTitle());
+        binding.tvMovieReleaseDate.setText(movie.getReleaseDate());
+        binding.tvMovieRating.setText(String.valueOf(movie.getVoteAverage()));
+        BindingAdapters.setImageUrl(binding.ivPoster, movie.getPosterPath());
+    }
 
+    @Override
+    public void showFavorite(boolean isFavorite) {
+        Drawable drawable = ContextCompat
+                .getDrawable(getContext(), isFavorite ? R.drawable.ic_favorite : R.drawable.ic_favorite_border);
+        int colorText = ContextCompat
+                .getColor(getContext(), isFavorite ? R.color.colorAccent : android.R.color.primary_text_dark);
+        String text = getString(isFavorite ? R.string.action_remove_from_favorites : R.string.action_add_to_favorites);
+        binding.addToFavorites.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+        binding.addToFavorites.setText(text);
+        binding.addToFavorites.setTextColor(colorText);
     }
 }

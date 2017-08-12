@@ -16,13 +16,18 @@ public class MoviesRepository implements MoviesDataSource {
     @NonNull
     private MoviesDataSource mRemoteDataSource;
 
-    private MoviesRepository(@NonNull MoviesDataSource remoteDataSource) {
+    @NonNull
+    private MoviesDataSource mLocalDataSource;
+
+    private MoviesRepository(@NonNull MoviesDataSource remoteDataSource, @NonNull MoviesDataSource localDataSource) {
         mRemoteDataSource = checkNotNull(remoteDataSource);
+        mLocalDataSource = localDataSource;
     }
 
-    public static MoviesRepository getInstance(@NonNull MoviesDataSource remoteDataSource) {
+    public static MoviesRepository getInstance(@NonNull MoviesDataSource remoteDataSource,
+            @NonNull MoviesDataSource localDataSource) {
         if (INSTANCE == null) {
-            INSTANCE = new MoviesRepository(remoteDataSource);
+            INSTANCE = new MoviesRepository(remoteDataSource, localDataSource);
         }
         return INSTANCE;
     }
@@ -39,5 +44,25 @@ public class MoviesRepository implements MoviesDataSource {
     @Override
     public Observable<MovieList> getTopRatedMovies() {
         return mRemoteDataSource.getTopRatedMovies();
+    }
+
+    @Override
+    public Observable<MovieList> getFavoriteMovies() {
+        return mLocalDataSource.getFavoriteMovies();
+    }
+
+    @Override
+    public Observable<Boolean> isFavorite(MovieEntity movie) {
+        return mLocalDataSource.isFavorite(movie);
+    }
+
+    @Override
+    public void saveFavoriteMovie(MovieEntity movie) {
+        mLocalDataSource.saveFavoriteMovie(movie);
+    }
+
+    @Override
+    public void deleteFavoriteMovie(MovieEntity movie) {
+        mLocalDataSource.deleteFavoriteMovie(movie);
     }
 }

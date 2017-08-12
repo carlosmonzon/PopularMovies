@@ -1,20 +1,17 @@
 package com.cmonzon.popularmovies.ui.movies;
 
+import com.cmonzon.popularmovies.BR;
 import com.cmonzon.popularmovies.R;
 import com.cmonzon.popularmovies.data.MovieEntity;
-import com.cmonzon.popularmovies.data.remote.MoviesService;
-import com.squareup.picasso.Picasso;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * @author cmonzon
@@ -31,18 +28,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
     @Override
     public MoviesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v.getTag() instanceof MovieEntity) {
-                    mListener.onItemClick((MovieEntity) v.getTag());
-                }
-            }
-        });
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.item_movie, parent, false);
 
-        return viewHolder;
+        return new ViewHolder(binding);
     }
 
     @Override
@@ -65,18 +54,17 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.iv_poster)
-        ImageView poster;
+        ViewDataBinding binding;
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public ViewHolder(ViewDataBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
         public void bind(MovieEntity movie) {
-            itemView.setTag(movie);
-            Picasso.with(itemView.getContext()).load(MoviesService.API_IMAGE_BASE_URL + movie.getPosterPath())
-                    .placeholder(R.color.light_grey).error(R.color.light_grey).into(poster);
+            binding.setVariable(BR.movie, movie);
+            binding.setVariable(BR.callback, mListener);
+            binding.executePendingBindings();
         }
     }
 

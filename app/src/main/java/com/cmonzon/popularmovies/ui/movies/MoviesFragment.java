@@ -2,29 +2,26 @@ package com.cmonzon.popularmovies.ui.movies;
 
 import com.cmonzon.popularmovies.R;
 import com.cmonzon.popularmovies.data.MovieEntity;
+import com.cmonzon.popularmovies.databinding.FragmentMoviesBinding;
 import com.cmonzon.popularmovies.ui.moviedetail.MovieDetailActivity;
 import com.cmonzon.popularmovies.util.ActivityUtils;
 import com.cmonzon.popularmovies.util.ItemOffsetDecoration;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * @author cmonzon
@@ -37,18 +34,11 @@ public class MoviesFragment extends Fragment implements MoviesContract.View, Mov
 
     private MoviesContract.Presenter mPresenter;
 
-    @BindView(R.id.rv_movies)
-    RecyclerView mRecyclerView;
-
-    @BindView(R.id.tv_error_message_display)
-    TextView errorMessageDisplay;
-
-    @BindView(R.id.pb_loading_indicator)
-    ProgressBar loadingIndicator;
-
     private MoviesAdapter mMoviesAdapter;
 
     private ArrayList<MovieEntity> movies;
+
+    FragmentMoviesBinding binding;
 
     public static MoviesFragment newInstance() {
         return new MoviesFragment();
@@ -57,15 +47,15 @@ public class MoviesFragment extends Fragment implements MoviesContract.View, Mov
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_movies, container, false);
-        ButterKnife.bind(this, view);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movies, container, false);
+        View view = binding.getRoot();
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), ActivityUtils.numberOfColumns(getActivity()));
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setHasFixedSize(true);
+        binding.rvMovies.setLayoutManager(layoutManager);
+        binding.rvMovies.setHasFixedSize(true);
         ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(getActivity(), R.dimen.grid_offset);
-        mRecyclerView.addItemDecoration(itemDecoration);
+        binding.rvMovies.addItemDecoration(itemDecoration);
         mMoviesAdapter = new MoviesAdapter(this);
-        mRecyclerView.setAdapter(mMoviesAdapter);
+        binding.rvMovies.setAdapter(mMoviesAdapter);
         return view;
     }
 
@@ -80,11 +70,18 @@ public class MoviesFragment extends Fragment implements MoviesContract.View, Mov
             movies = savedInstanceState.getParcelableArrayList(MOVIES_KEY);
         }
         //if there are movies show them, if not request
-        if (movies != null) {
+        //if sort type is favorites, subscribe to db changes
+        if (movies != null && !mPresenter.getSortType().equals(MoviesSortType.FAVORITES)) {
             showMovies(movies);
         } else {
             mPresenter.loadMovies();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.unSubscribe();
     }
 
     @Override
@@ -95,6 +92,9 @@ public class MoviesFragment extends Fragment implements MoviesContract.View, Mov
             item.setChecked(true);
         } else if (mPresenter.getSortType().equals(MoviesSortType.TOP_RATED)) {
             MenuItem item = menu.findItem(R.id.action_sort_by_top_rated);
+            item.setChecked(true);
+        } else if (mPresenter.getSortType().equals(MoviesSortType.FAVORITES)) {
+            MenuItem item = menu.findItem(R.id.action_sort_by_favorites);
             item.setChecked(true);
         }
     }
@@ -125,6 +125,13 @@ public class MoviesFragment extends Fragment implements MoviesContract.View, Mov
                 mPresenter.loadMovies();
             }
             return true;
+        } else if (id == R.id.action_sort_by_favorites) {
+            if (!item.isChecked()) {
+                item.setChecked(true);
+                mPresenter.setSortType(MoviesSortType.FAVORITES);
+                mPresenter.loadMovies();
+            }
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -137,21 +144,22 @@ public class MoviesFragment extends Fragment implements MoviesContract.View, Mov
     @Override
     public void showMovies(ArrayList<MovieEntity> movies) {
         this.movies = movies;
-        mRecyclerView.setVisibility(View.VISIBLE);
-        errorMessageDisplay.setVisibility(View.INVISIBLE);
+        binding.rvMovies.setVisibility(View.VISIBLE);
+        binding.tvErrorMessageDisplay.setVisibility(View.INVISIBLE);
         mMoviesAdapter.setMovies(movies);
     }
 
     @Override
     public void showProgressIndicator(boolean isVisible) {
-        loadingIndicator.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
+        binding.pbLoadingIndicator.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
     public void showLoadingError() {
-        errorMessageDisplay.setVisibility(View.VISIBLE);
-        mRecyclerView.setVisibility(View.INVISIBLE);
-        loadingIndicator.setVisibility(View.INVISIBLE);
+        binding.tvErrorMessageDisplay.setVisibility(View.VISIBLE);
+        binding.tvErrorMessageDisplay.setText(R.string.error_message);
+        binding.rvMovies.setVisibility(View.INVISIBLE);
+        binding.pbLoadingIndicator.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -159,6 +167,12 @@ public class MoviesFragment extends Fragment implements MoviesContract.View, Mov
         Intent intent = new Intent(getContext(), MovieDetailActivity.class);
         intent.putExtra(MovieDetailActivity.MOVIE_KEY, movie);
         startActivity(intent);
+    }
+
+    @Override
+    public void showNoDataFound() {
+        binding.tvErrorMessageDisplay.setVisibility(View.VISIBLE);
+        binding.tvErrorMessageDisplay.setText(R.string.empty_movies_message);
     }
 
     @Override
