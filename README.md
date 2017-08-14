@@ -11,7 +11,7 @@ Popular Movies Stage 2
 ## Screenshots
 ![screen](../master/art/phone_list.jpg)
 ![screen](../master/art/phone_detail.jpg)
-![screen](../master/art/tablet_detail_landscape.jpg)
+![screen](../master/art/tablet_detail_lanscape.jpg)
 
 ## Remote Source
 
