@@ -3,11 +3,16 @@
 
     <string name="poster_content_description">Movie poster</string>
 
+    <string name="video_content_description">Trailer image</string>
+
     <!--error messages-->
     <string name="error_message">An error has occurred. Please try again</string>
 
     <string name="empty_movies_message">No movies found</string>
 
+    <string name="empty_videos_message">No trailers found</string>
+
+    <string name="empty_reviews_message">No reviews found</string>
 
     <!--action-->
     <string name="action_sort_by">Sort by</string>
@@ -23,4 +28,12 @@
     <string name="action_remove_from_favorites">Added to favorites</string>
 
     <string name="action_share">Share</string>
+
+    <!--title-->
+    <string name="trailers_title">Trailers</string>
+    <string name="reviews_title">Reviews</string>
+
+    <string name="message_trailer_share">Watch the %1$s of %2$s #PopularMovies\n %3$s</string>
+    <string name="youtube_image_url" translatable="false">http://img.youtube.com/vi/%1$s/mqdefault.jpg</string>
+    <string name="youtube_video_url" translatable="false">http://www.youtube.com/watch?v=%1$s</string>
 </resources>

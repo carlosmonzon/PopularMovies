@@ -1,6 +1,7 @@
 package com.cmonzon.popularmovies.data.remote;
 
 import com.cmonzon.popularmovies.data.MovieList;
+import com.cmonzon.popularmovies.data.ReviewList;
 import com.cmonzon.popularmovies.data.VideoList;
 
 import io.reactivex.Observable;
@@ -20,5 +21,8 @@ public interface MoviesApi {
 
     @GET("movie/{id}/videos")
     Observable<VideoList> getMovieVideos(@Path("id") int movieId);
+
+    @GET("movie/{id}/reviews")
+    Observable<ReviewList> getMovieReviews(@Path("id") int movieId);
 
 }

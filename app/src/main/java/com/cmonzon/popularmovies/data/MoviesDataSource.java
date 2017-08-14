@@ -15,6 +15,10 @@ public interface MoviesDataSource {
 
     Observable<Boolean> isFavorite(MovieEntity movie);
 
+    Observable<VideoList> getMovieVideos(int movieId);
+
+    Observable<ReviewList> getMovieReviews(int movieId);
+
     void saveFavoriteMovie(MovieEntity movie);
 
     void deleteFavoriteMovie(MovieEntity movie);

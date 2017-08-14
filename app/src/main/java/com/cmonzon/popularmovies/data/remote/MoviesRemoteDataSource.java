@@ -3,6 +3,8 @@ package com.cmonzon.popularmovies.data.remote;
 import com.cmonzon.popularmovies.data.MovieEntity;
 import com.cmonzon.popularmovies.data.MovieList;
 import com.cmonzon.popularmovies.data.MoviesDataSource;
+import com.cmonzon.popularmovies.data.ReviewList;
+import com.cmonzon.popularmovies.data.VideoList;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
@@ -50,6 +52,16 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
     @Override
     public Observable<Boolean> isFavorite(MovieEntity movie) {
         return null;
+    }
+
+    @Override
+    public Observable<VideoList> getMovieVideos(int movieId) {
+        return mMoviesApi.getMovieVideos(movieId).subscribeOn(Schedulers.io());
+    }
+
+    @Override
+    public Observable<ReviewList> getMovieReviews(int movieId) {
+        return mMoviesApi.getMovieReviews(movieId).subscribeOn(Schedulers.io());
     }
 
     @Override

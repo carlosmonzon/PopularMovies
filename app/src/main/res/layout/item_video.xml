@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="video"
+            type="com.cmonzon.popularmovies.data.VideoEntity"
+        />
+
+        <variable
+        name="videoCallback"
+        type="com.cmonzon.popularmovies.ui.moviedetail.VideosAdapter.VideoAdapterOnClickHandler"
+        />
+    </data>
+
+    <FrameLayout
+        android:layout_height="match_parent"
+        android:foreground="?attr/selectableItemBackground"
+        android:onClick="@{() -> videoCallback.onItemClick(video)}"
+        android:layout_width="wrap_content">
+        <ImageView
+            android:id="@+id/iv_video"
+            android:layout_width="match_parent"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/poster_content_description"
+            app:videoKey="@{video.key}"
+            android:layout_height="match_parent"/>
+
+        <ImageView android:layout_width="32dp"
+                   android:layout_height="32dp"
+                   android:src="@drawable/ic_play_circle"
+                   android:layout_gravity="center"
+        />
+
+    </FrameLayout>
+</layout>

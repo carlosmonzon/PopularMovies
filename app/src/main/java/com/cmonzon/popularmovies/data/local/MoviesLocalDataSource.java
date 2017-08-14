@@ -3,6 +3,8 @@ package com.cmonzon.popularmovies.data.local;
 import com.cmonzon.popularmovies.data.MovieEntity;
 import com.cmonzon.popularmovies.data.MovieList;
 import com.cmonzon.popularmovies.data.MoviesDataSource;
+import com.cmonzon.popularmovies.data.ReviewList;
+import com.cmonzon.popularmovies.data.VideoList;
 import com.squareup.sqlbrite2.BriteContentResolver;
 import com.squareup.sqlbrite2.SqlBrite;
 
@@ -106,6 +108,18 @@ public class MoviesLocalDataSource implements MoviesDataSource {
         return briteResolver
                 .createQuery(ContentUris.withAppendedId(MovieContract.MovieEntry.CONTENT_URI, movie.getId()), projection,
                         null, null, null, true).map(isFavoriteMapperFunction);
+    }
+
+    @Override
+    public Observable<VideoList> getMovieVideos(int movieId) {
+        //not implemented
+        return null;
+    }
+
+    @Override
+    public Observable<ReviewList> getMovieReviews(int movieId) {
+        //not implemented
+        return null;
     }
 
     @NonNull

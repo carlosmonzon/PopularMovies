@@ -57,6 +57,16 @@ public class MoviesRepository implements MoviesDataSource {
     }
 
     @Override
+    public Observable<VideoList> getMovieVideos(int movieId) {
+        return mRemoteDataSource.getMovieVideos(movieId);
+    }
+
+    @Override
+    public Observable<ReviewList> getMovieReviews(int movieId) {
+        return mRemoteDataSource.getMovieReviews(movieId);
+    }
+
+    @Override
     public void saveFavoriteMovie(MovieEntity movie) {
         mLocalDataSource.saveFavoriteMovie(movie);
     }
