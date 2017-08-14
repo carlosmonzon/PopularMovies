@@ -1,14 +1,17 @@
 # PopularMovies
-Popular Movies Stage 1
+Popular Movies Stage 2
 
 ## Features
-* Sort movies by most popular and top rated
-* Movie detail (release date, original title, rating and overview)
+* Sort movies by most popular, top rated and favorites
+* Movie details (release date, original title, rating and overview)
+* Movie trailers & reviews
+* Set movies as favorite
+* Share Trailer
 
 ## Screenshots
-![screen](../master/art/phone_movies.jpg)
-![screen](../master/art/phone_movie_detail.jpg)
-![screen](../master/art/tablet_movies_landscape.jpg)
+![screen](../master/art/phone_list.jpg)
+![screen](../master/art/phone_detail.jpg)
+![screen](../master/art/tablet_detail_landscape.jpg)
 
 ## Remote Source
 
@@ -21,6 +24,6 @@ You must provide your own API key in order to build the app and replace it on th
 
 * [Picasso](http://square.github.io/picasso/) 
 * [Retrofit](http://square.github.io/retrofit/) 
-* [Butterknife](http://jakewharton.github.io/butterknife/)
+* [SqlBrite](https://github.com/square/sqlbrite)
 * [RxJava](https://github.com/ReactiveX/RxJava)
 * [RxAndroid](https://github.com/ReactiveX/RxAndroid)
